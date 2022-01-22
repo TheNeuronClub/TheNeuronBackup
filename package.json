@@ -1,0 +1,20 @@
+{
+  "name": "theneuronbackup",
+  "version": "1.0.0",
+  "description": "backup",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
+  },
+  "author": "ankit",
+  "license": "MIT",
+  "dependencies": {
+    "cloudinary": "^1.28.1",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6",
+    "node-schedule": "^2.1.0"
+  }
+}
