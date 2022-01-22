@@ -16,8 +16,10 @@ const port = 5000 || process.env.PORT
 const cloudinary = require("cloudinary").v2;
 require('dotenv').config()
 
+const todayDate = new Date().toDateString();
+
 // connecting to database
-const db = process.env.DB
+const db = process.env.DB;
 mongoose.connect(db)
     .then(() => {
         console.log('Mongodb is connected Successfully !');
@@ -34,7 +36,7 @@ cloudinary.config({
 
 function uploadFile(file, filename) {
     // upload image here
-    cloudinary.uploader.upload(file, { resource_type: "raw", folder: process.env.FOLDER_NAME, tags: filename})
+    cloudinary.uploader.upload(file, { resource_type: "raw", folder: `${process.env.FOLDER_NAME}/${todayDate}`, tags: filename})
         .then((result) => {
             // console.log(result.secure_url);
             console.log(`${filename}.json uploaded successfully`)
