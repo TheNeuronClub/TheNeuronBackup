@@ -12,8 +12,7 @@ const Header = require('./models/header');
 const QComment = require('./models/qcomment');
 const QueCategory = require('./models/queCategory');
 const app = express();
-const host = 'http://localhost';
-const port = 5000
+const port = 5000 || process.env.PORT
 const cloudinary = require("cloudinary").v2;
 require('dotenv').config()
 
@@ -110,18 +109,18 @@ function user() {
 
 
 // (second minute hour dayOfMonth Month dayofweek)
-// var dailyJob = scheduler.scheduleJob('0 15 0 * * *', function () {
-var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
+var dailyJob = scheduler.scheduleJob('0 15 0 * * *', function () {
+// var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
     console.log('Backup will run everyday at 12:15 AM');
     user();
-    // transaction();
-    // question();
-    // withdraw();
-    // qcomment();
-    // header();
-    // queCategory();
-    // contact();
-    // bug();
+    transaction();
+    question();
+    withdraw();
+    qcomment();
+    header();
+    queCategory();
+    contact();
+    bug();
 });
 
 app.listen(port, () => console.log('server running'))
