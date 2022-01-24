@@ -112,7 +112,7 @@ function user() {
 app.get('/', (req, res) => {
     try {
         // (second minute hour dayOfMonth Month dayofweek)
-        var dailyJob = scheduler.scheduleJob('0 40 5 * * *', function () {
+        var dailyJob = scheduler.scheduleJob('0 45 5 * * *', function () {
             // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
             console.log('Backup will run everyday at 12:15 AM');
             user();
@@ -125,25 +125,32 @@ app.get('/', (req, res) => {
             contact();
             bug();
         });
+
+        res.status(200).send({ msg: 'creating backup' })
     } catch (error) {
         console.log(error)
         res.status(400).send({ msg: error })
     }
 })
 
+app.get('/a', (req, res) => {
+    res.status(200).send({ msg: 'working fine', req: req })
+})
+
+
 // (second minute hour dayOfMonth Month dayofweek)
-var dailyJob = scheduler.scheduleJob('0 15 0 * * *', function () {
-    // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
-    console.log('Backup will run everyday at 12:15 AM');
-    user();
-    transaction();
-    question();
-    withdraw();
-    qcomment();
-    header();
-    queCategory();
-    contact();
-    bug();
-});
+// var dailyJob = scheduler.scheduleJob('0 15 0 * * *', function () {
+//     // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
+//     console.log('Backup will run everyday at 12:15 AM');
+//     user();
+//     transaction();
+//     question();
+//     withdraw();
+//     qcomment();
+//     header();
+//     queCategory();
+//     contact();
+//     bug();
+// });
 
 app.listen(port, () => console.log('server running'))
