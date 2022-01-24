@@ -38,7 +38,7 @@ function uploadFile(file, filename) {
     // upload image here
     cloudinary.uploader.upload(file, { resource_type: "raw", folder: `${process.env.FOLDER_NAME}/${todayDate}`, tags: filename })
         .then((result) => {
-            // console.log(result.secure_url);
+            console.log(result.secure_url);
             console.log(`${filename}.json uploaded successfully`)
         }).catch((error) => {
             console.log({
@@ -112,7 +112,7 @@ function user() {
 app.get('/', (req, res) => {
     try {
         // (second minute hour dayOfMonth Month dayofweek)
-        var dailyJob = scheduler.scheduleJob('0 17 5 * * *', function () {
+        var dailyJob = scheduler.scheduleJob('0 30 5 * * *', function () {
             // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
             console.log('Backup will run everyday at 12:15 AM');
             user();
