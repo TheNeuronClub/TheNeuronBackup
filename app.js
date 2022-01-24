@@ -112,7 +112,7 @@ function user() {
 app.get('/', (req, res) => {
     try {
         // (second minute hour dayOfMonth Month dayofweek)
-        var dailyJob = scheduler.scheduleJob('0 45 5 * * *', function () {
+        var dailyJob = scheduler.scheduleJob('0 17 5 * * *', function () {
             // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
             console.log('Backup will run everyday at 12:15 AM');
             user();
@@ -134,7 +134,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/a', (req, res) => {
-    res.status(200).send({ msg: 'working fine', req: req })
+    res.status(200).send({ msg: 'working fine' })
 })
 
 
