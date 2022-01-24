@@ -12,7 +12,7 @@ const Header = require('./models/header');
 const QComment = require('./models/qcomment');
 const QueCategory = require('./models/queCategory');
 const app = express();
-const port = 5000 || process.env.PORT
+const port = process.env.PORT || 5000
 const cloudinary = require("cloudinary").v2;
 require('dotenv').config()
 
@@ -29,14 +29,14 @@ mongoose.connect(db)
     })
 
 cloudinary.config({
-    cloud_name: process.env.cloud_name ,
-    api_key: process.env.api_key ,
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
     api_secret: process.env.api_secret
 });
 
 function uploadFile(file, filename) {
     // upload image here
-    cloudinary.uploader.upload(file, { resource_type: "raw", folder: `${process.env.FOLDER_NAME}/${todayDate}`, tags: filename})
+    cloudinary.uploader.upload(file, { resource_type: "raw", folder: `${process.env.FOLDER_NAME}/${todayDate}`, tags: filename })
         .then((result) => {
             // console.log(result.secure_url);
             console.log(`${filename}.json uploaded successfully`)
@@ -109,10 +109,31 @@ function user() {
         .catch(e => console.log(e))
 }
 
+app.get('/', (req, res) => {
+    try {
+        // (second minute hour dayOfMonth Month dayofweek)
+        var dailyJob = scheduler.scheduleJob('0 40 5 * * *', function () {
+            // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
+            console.log('Backup will run everyday at 12:15 AM');
+            user();
+            transaction();
+            question();
+            withdraw();
+            qcomment();
+            header();
+            queCategory();
+            contact();
+            bug();
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({ msg: error })
+    }
+})
 
 // (second minute hour dayOfMonth Month dayofweek)
 var dailyJob = scheduler.scheduleJob('0 15 0 * * *', function () {
-// var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
+    // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
     console.log('Backup will run everyday at 12:15 AM');
     user();
     transaction();
