@@ -112,8 +112,9 @@ function user() {
 app.get('/', (req, res) => {
     try {
         // (second minute hour dayOfMonth Month dayofweek)
-        var dailyJob = scheduler.scheduleJob('0 30 5 * * *', function () {
+        // var dailyJob = scheduler.scheduleJob('0 30 5 * * *', function () {
             // var dailyJob = scheduler.scheduleJob('1 * * * * *', function () {
+        var dailyJob = scheduler.scheduleJob(`0 ${req.query.min} ${req.query.hour} * * *`, function () {
             console.log('Backup will run everyday at 12:15 AM');
             user();
             transaction();
